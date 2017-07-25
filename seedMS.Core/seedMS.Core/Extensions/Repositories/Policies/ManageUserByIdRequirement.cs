@@ -9,7 +9,7 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using seedMS.Core.DomainModels.Identity;
+using seedMS.Core.DomainModels.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace seedMS.Core.Extensions.Identity
+namespace seedMS.Core.Extensions.Repositories
 {
     public class ManageUserByIdRequirement : IAuthorizationRequirement
     {

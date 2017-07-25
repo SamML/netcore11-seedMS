@@ -15,26 +15,26 @@ using System.Collections.ObjectModel;
 
 namespace seedMS.Core.Extensions.Identity
 {
-    public static class ApplicationPermissions
+    public static class CoreApplicationPermissions
     {
-        public static ReadOnlyCollection<ApplicationPermission> AllPermissions;
+        public static ReadOnlyCollection<CoreApplicationPermission> AllPermissions;
 
 
         public const string UsersPermissionGroupName = "User Permissions";
-        public static ApplicationPermission ViewUsers = new ApplicationPermission("View Users", "users.view", UsersPermissionGroupName, "Permission to view other users account details");
-        public static ApplicationPermission ManageUsers = new ApplicationPermission("Manage Users", "users.manage", UsersPermissionGroupName, "Permission to create, delete and modify other users account details");
+        public static CoreApplicationPermission ViewUsers = new CoreApplicationPermission("View Users", "users.view", UsersPermissionGroupName, "Permission to view other users account details");
+        public static CoreApplicationPermission ManageUsers = new CoreApplicationPermission("Manage Users", "users.manage", UsersPermissionGroupName, "Permission to create, delete and modify other users account details");
 
         public const string RolesPermissionGroupName = "Role Permissions";
-        public static ApplicationPermission ViewRoles = new ApplicationPermission("View Roles", "roles.view", RolesPermissionGroupName, "Permission to view available roles");
-        public static ApplicationPermission ManageRoles = new ApplicationPermission("Manage Roles", "roles.manage", RolesPermissionGroupName, "Permission to create, delete and modify roles");
-        public static ApplicationPermission AssignRoles = new ApplicationPermission("Assign Roles", "roles.assign", RolesPermissionGroupName, "Permission to assign roles to users");
+        public static CoreApplicationPermission ViewRoles = new CoreApplicationPermission("View Roles", "roles.view", RolesPermissionGroupName, "Permission to view available roles");
+        public static CoreApplicationPermission ManageRoles = new CoreApplicationPermission("Manage Roles", "roles.manage", RolesPermissionGroupName, "Permission to create, delete and modify roles");
+        public static CoreApplicationPermission AssignRoles = new CoreApplicationPermission("Assign Roles", "roles.assign", RolesPermissionGroupName, "Permission to assign roles to users");
 
 
 
 
-        static ApplicationPermissions()
+        static CoreApplicationPermissions()
         {
-            List<ApplicationPermission> allPermissions = new List<ApplicationPermission>()
+            List<CoreApplicationPermission> allPermissions = new List<CoreApplicationPermission>()
             {
                 ViewUsers,
                 ManageUsers,
@@ -47,12 +47,12 @@ namespace seedMS.Core.Extensions.Identity
             AllPermissions = allPermissions.AsReadOnly();
         }
 
-        public static ApplicationPermission GetPermissionByName(string permissionName)
+        public static CoreApplicationPermission GetPermissionByName(string permissionName)
         {
             return AllPermissions.Where(p => p.Name == permissionName).FirstOrDefault();
         }
 
-        public static ApplicationPermission GetPermissionByValue(string permissionValue)
+        public static CoreApplicationPermission GetPermissionByValue(string permissionValue)
         {
             return AllPermissions.Where(p => p.Value == permissionValue).FirstOrDefault();
         }
@@ -72,12 +72,12 @@ namespace seedMS.Core.Extensions.Identity
 
 
 
-    public class ApplicationPermission
+    public class CoreApplicationPermission
     {
-        public ApplicationPermission()
+        public CoreApplicationPermission()
         { }
 
-        public ApplicationPermission(string name, string value, string groupName, string description = null)
+        public CoreApplicationPermission(string name, string value, string groupName, string description = null)
         {
             Name = name;
             Value = value;
@@ -99,7 +99,7 @@ namespace seedMS.Core.Extensions.Identity
         }
 
 
-        public static implicit operator string(ApplicationPermission permission)
+        public static implicit operator string(CoreApplicationPermission permission)
         {
             return permission.Value;
         }

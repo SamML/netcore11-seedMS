@@ -9,9 +9,9 @@
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using seedMS.Core.DomainModels.Identity;
-using seedMS.Core.Data.Identity;
-using seedMS.Core.Interfaces.Identity;
+using seedMS.Core.DomainModels.Repositories;
+using seedMS.Core.Data.Repositories;
+using seedMS.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +20,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace seedMS.Core.Extensions.Identity
-{
+namespace seedMS.Core.Extensions.Repositories
+{ 
     
-    public class CoreAccountManager : ICoreAccountManager
+    public class RepositoriesAccountManager : IRepositoriesAccountManager
     {
-        private readonly CoreIdentityDbContext _context;
-        private readonly UserManager<CoreIdentityUser> _userManager;
-        private readonly RoleManager<CoreIdentityRole> _roleManager;
+        private readonly CoreRepositoriesDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
 
 
-        public CoreAccountManager(CoreIdentityDbContext context, UserManager<CoreIdentityUser> userManager, RoleManager<CoreIdentityRole> roleManager)
+        public RepositoriesAccountManager(CoreRepositoriesDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
@@ -40,28 +40,28 @@ namespace seedMS.Core.Extensions.Identity
 
 
 
-        public async Task<CoreIdentityUser> GetUserByIdAsync(string userId)
+        public async Task<ApplicationUser> GetUserByIdAsync(string userId)
         {
             return await _userManager.FindByIdAsync(userId);
         }
 
-        public async Task<CoreIdentityUser> GetUserByUserNameAsync(string userName)
+        public async Task<ApplicationUser> GetUserByUserNameAsync(string userName)
         {
             return await _userManager.FindByNameAsync(userName);
         }
 
-        public async Task<CoreIdentityUser> GetUserByEmailAsync(string email)
+        public async Task<ApplicationUser> GetUserByEmailAsync(string email)
         {
             return await _userManager.FindByEmailAsync(email);
         }
 
-        public async Task<IList<string>> GetUserRolesAsync(CoreIdentityUser user)
+        public async Task<IList<string>> GetUserRolesAsync(ApplicationUser user)
         {
             return await _userManager.GetRolesAsync(user);
         }
 
 
-        public async Task<Tuple<CoreIdentityUser, string[]>> GetUserAndRolesAsync(string userId)
+        public async Task<Tuple<ApplicationUser, string[]>> GetUserAndRolesAsync(string userId)
         {
             var user = await _context.Users
                 .Include(u => u.Roles)
@@ -82,9 +82,9 @@ namespace seedMS.Core.Extensions.Identity
         }
 
 
-        public async Task<List<Tuple<CoreIdentityUser, string[]>>> GetUsersAndRolesAsync(int page, int pageSize)
+        public async Task<List<Tuple<ApplicationUser, string[]>>> GetUsersAndRolesAsync(int page, int pageSize)
         {
-            IQueryable<CoreIdentityUser> usersQuery = _context.Users
+            IQueryable<ApplicationUser> usersQuery = _context.Users
                 .Include(u => u.Roles)
                 .OrderBy(u => u.UserName);
 
@@ -108,7 +108,7 @@ namespace seedMS.Core.Extensions.Identity
         }
 
 
-        public async Task<Tuple<bool, string[]>> CreateUserAsync(CoreIdentityUser user, IEnumerable<string> roles, string password)
+        public async Task<Tuple<bool, string[]>> CreateUserAsync(ApplicationUser user, IEnumerable<string> roles, string password)
         {
             var result = await _userManager.CreateAsync(user, password);
             if (!result.Succeeded)
@@ -137,13 +137,13 @@ namespace seedMS.Core.Extensions.Identity
         }
 
 
-        public async Task<Tuple<bool, string[]>> UpdateUserAsync(CoreIdentityUser user)
+        public async Task<Tuple<bool, string[]>> UpdateUserAsync(ApplicationUser user)
         {
             return await UpdateUserAsync(user, null);
         }
 
 
-        public async Task<Tuple<bool, string[]>> UpdateUserAsync(CoreIdentityUser user, IEnumerable<string> roles)
+        public async Task<Tuple<bool, string[]>> UpdateUserAsync(ApplicationUser user, IEnumerable<string> roles)
         {
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
@@ -176,7 +176,7 @@ namespace seedMS.Core.Extensions.Identity
         }
 
 
-        public async Task<Tuple<bool, string[]>> ResetPasswordAsync(CoreIdentityUser user, string newPassword)
+        public async Task<Tuple<bool, string[]>> ResetPasswordAsync(ApplicationUser user, string newPassword)
         {
             string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
 
@@ -187,7 +187,7 @@ namespace seedMS.Core.Extensions.Identity
             return Tuple.Create(true, new string[] { });
         }
 
-        public async Task<Tuple<bool, string[]>> UpdatePasswordAsync(CoreIdentityUser user, string currentPassword, string newPassword)
+        public async Task<Tuple<bool, string[]>> UpdatePasswordAsync(ApplicationUser user, string currentPassword, string newPassword)
         {
             var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
             if (!result.Succeeded)
@@ -196,7 +196,7 @@ namespace seedMS.Core.Extensions.Identity
             return Tuple.Create(true, new string[] { });
         }
 
-        public async Task<bool> CheckPasswordAsync(CoreIdentityUser user, string password)
+        public async Task<bool> CheckPasswordAsync(ApplicationUser user, string password)
         {
             if (!await _userManager.CheckPasswordAsync(user, password))
             {
@@ -224,7 +224,7 @@ namespace seedMS.Core.Extensions.Identity
         }
 
 
-        public async Task<Tuple<bool, string[]>> DeleteUserAsync(CoreIdentityUser user)
+        public async Task<Tuple<bool, string[]>> DeleteUserAsync(ApplicationUser user)
         {
             var result = await _userManager.DeleteAsync(user);
             return Tuple.Create(result.Succeeded, result.Errors.Select(e => e.Description).ToArray());
@@ -235,19 +235,19 @@ namespace seedMS.Core.Extensions.Identity
 
 
 
-        public async Task<CoreIdentityRole> GetRoleByIdAsync(string roleId)
+        public async Task<ApplicationRole> GetRoleByIdAsync(string roleId)
         {
             return await _roleManager.FindByIdAsync(roleId);
         }
 
 
-        public async Task<CoreIdentityRole> GetRoleByNameAsync(string roleName)
+        public async Task<ApplicationRole> GetRoleByNameAsync(string roleName)
         {
             return await _roleManager.FindByNameAsync(roleName);
         }
 
 
-        public async Task<CoreIdentityRole> GetRoleLoadRelatedAsync(string roleName)
+        public async Task<ApplicationRole> GetRoleLoadRelatedAsync(string roleName)
         {
             var role = await _context.Roles
                 .Include(r => r.Claims)
@@ -259,9 +259,9 @@ namespace seedMS.Core.Extensions.Identity
         }
 
 
-        public async Task<List<CoreIdentityRole>> GetRolesLoadRelatedAsync(int page, int pageSize)
+        public async Task<List<ApplicationRole>> GetRolesLoadRelatedAsync(int page, int pageSize)
         {
-            IQueryable<CoreIdentityRole> rolesQuery = _context.Roles
+            IQueryable<ApplicationRole> rolesQuery = _context.Roles
                 .Include(r => r.Claims)
                 .Include(r => r.Users)
                 .OrderBy(r => r.Name);
@@ -278,12 +278,12 @@ namespace seedMS.Core.Extensions.Identity
         }
 
 
-        public async Task<Tuple<bool, string[]>> CreateRoleAsync(CoreIdentityRole role, IEnumerable<string> claims)
+        public async Task<Tuple<bool, string[]>> CreateRoleAsync(ApplicationRole role, IEnumerable<string> claims)
         {
             if (claims == null)
                 claims = new string[] { };
 
-            string[] invalidClaims = claims.Where(c => CoreApplicationPermissions.GetPermissionByValue(c) == null).ToArray();
+            string[] invalidClaims = claims.Where(c => ApplicationPermissions.GetPermissionByValue(c) == null).ToArray();
             if (invalidClaims.Any())
                 return Tuple.Create(false, new string[] { "The following claim types are invalid: " + string.Join(", ", invalidClaims) });
 
@@ -297,7 +297,7 @@ namespace seedMS.Core.Extensions.Identity
 
             foreach (string claim in claims.Distinct())
             {
-                result = await this._roleManager.AddClaimAsync(role, new Claim(CoreCustomClaimTypes.Permission, CoreApplicationPermissions.GetPermissionByValue(claim)));
+                result = await this._roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, ApplicationPermissions.GetPermissionByValue(claim)));
 
                 if (!result.Succeeded)
                 {
@@ -309,11 +309,11 @@ namespace seedMS.Core.Extensions.Identity
             return Tuple.Create(true, new string[] { });
         }
 
-        public async Task<Tuple<bool, string[]>> UpdateRoleAsync(CoreIdentityRole role, IEnumerable<string> claims)
+        public async Task<Tuple<bool, string[]>> UpdateRoleAsync(ApplicationRole role, IEnumerable<string> claims)
         {
             if (claims != null)
             {
-                string[] invalidClaims = claims.Where(c => CoreApplicationPermissions.GetPermissionByValue(c) == null).ToArray();
+                string[] invalidClaims = claims.Where(c => ApplicationPermissions.GetPermissionByValue(c) == null).ToArray();
                 if (invalidClaims.Any())
                     return Tuple.Create(false, new string[] { "The following claim types are invalid: " + string.Join(", ", invalidClaims) });
             }
@@ -326,7 +326,7 @@ namespace seedMS.Core.Extensions.Identity
 
             if (claims != null)
             {
-                var roleClaims = (await _roleManager.GetClaimsAsync(role)).Where(c => c.Type == CoreCustomClaimTypes.Permission);
+                var roleClaims = (await _roleManager.GetClaimsAsync(role)).Where(c => c.Type == CustomClaimTypes.Permission);
                 var roleClaimValues = roleClaims.Select(c => c.Value).ToArray();
 
                 var claimsToRemove = roleClaimValues.Except(claims).ToArray();
@@ -346,7 +346,7 @@ namespace seedMS.Core.Extensions.Identity
                 {
                     foreach (string claim in claimsToAdd)
                     {
-                        result = await _roleManager.AddClaimAsync(role, new Claim(CoreCustomClaimTypes.Permission, CoreApplicationPermissions.GetPermissionByValue(claim)));
+                        result = await _roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, ApplicationPermissions.GetPermissionByValue(claim)));
                         if (!result.Succeeded)
                             return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
                     }
@@ -368,7 +368,7 @@ namespace seedMS.Core.Extensions.Identity
         }
 
 
-        public async Task<Tuple<bool, string[]>> DeleteRoleAsync(CoreIdentityRole role)
+        public async Task<Tuple<bool, string[]>> DeleteRoleAsync(ApplicationRole role)
         {
             var result = await _roleManager.DeleteAsync(role);
             return Tuple.Create(result.Succeeded, result.Errors.Select(e => e.Description).ToArray());

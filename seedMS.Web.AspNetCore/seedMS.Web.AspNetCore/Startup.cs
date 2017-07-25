@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using seedMS.Web.AspNetCore.Services;
-using seedMS.Core.Data;
+using seedMS.Core.Data.Repositories;
 using seedMS.Core.DomainModels.Identity;
 using seedMS.Core;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -22,7 +22,12 @@ using seedMS.Core.Extensions.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using AppPermissions = seedMS.Core.Extensions.Identity.ApplicationPermissions;
+using AppPermissions = seedMS.Core.Extensions.Repositories.ApplicationPermissions;
+using seedMS.Core.Data.Identity;
+using seedMS.Core.DomainModels.Repositories;
+using seedMS.Core.Interfaces.Repositories;
+using seedMS.Core.Data;
+using seedMS.Core.Extensions.Repositories;
 
 namespace seedMS.Web.AspNetCore
 {
@@ -55,12 +60,19 @@ namespace seedMS.Web.AspNetCore
         public void ConfigureServices(IServiceCollection services)
         {
            
-            // ADD DB CONTEXT
-            services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            // ADD DB CONTEXTS
+            services.AddDbContext<CoreIdentityDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("CoreIdentityDbContextConnection")));
+
+            services.AddIdentity<CoreIdentityUser, CoreIdentityRole>()
+                .AddEntityFrameworkStores<CoreIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddDbContext<CoreRepositoriesDbContext>(options =>
+           options.UseSqlServer(Configuration.GetConnectionString("CoreIdentityDbContextConnection")));
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<CoreRepositoriesDbContext>()
                 .AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(options =>
@@ -130,10 +142,12 @@ namespace seedMS.Web.AspNetCore
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
-            //ADD Account Manager Service
-            services.AddScoped<IAccountManager, AccountManager>();
+            //ADD Account Manager Services
+            services.AddScoped<ICoreAccountManager, CoreAccountManager>();
+            services.AddScoped<IRepositoriesAccountManager, RepositoriesAccountManager>();
             // DB Creation and Seeding
-            services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
+            services.AddTransient<IDatabaseInitializer, CoreIdentityDbInitializer>();
+            services.AddTransient<IDatabaseInitializer, CoreRepositoriesDbInitializer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -15,13 +15,13 @@ using Microsoft.EntityFrameworkCore;
 
 using seedMS.Core.DomainModels.Repositories;
 using seedMS.Core.Interfaces.Repositories;
-using seedMS.Core.Data;
+using seedMS.Core.Data.Repositories;
 
 namespace seedMS.Core.Extensions.Repositories
 {
     public class CustomerRepository : Repository<Customer>, ICustomerRepository
     {
-        public CustomerRepository(ApplicationDbContext context) : base(context)
+        public CustomerRepository(CoreRepositoriesDbContext context) : base(context)
         { }
 
 
@@ -42,9 +42,9 @@ namespace seedMS.Core.Extensions.Repositories
 
 
 
-        private ApplicationDbContext appContext
+        private CoreRepositoriesDbContext appContext
         {
-            get { return (ApplicationDbContext)_context; }
+            get { return (CoreRepositoriesDbContext)_context; }
         }
     }
 }

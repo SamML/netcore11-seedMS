@@ -9,9 +9,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using seedMS.Core.DomainModels.Repositories;
-
-using seedMS.Core.Extensions.Identity;
-using seedMS.Core.Interfaces.Identity;
+using seedMS.Core.Extensions.Repositories;
+using seedMS.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,10 +20,10 @@ namespace seedMS.Core.Data.Repositories
     public class CoreRepositoriesDbInitializer : IDatabaseInitializer
     {
         private readonly CoreRepositoriesDbContext _context;
-        private readonly IAccountManager _accountManager;
+        private readonly IRepositoriesAccountManager _accountManager;
         private readonly ILogger _logger;
 
-        public CoreRepositoriesDbInitializer(CoreRepositoriesDbContext context, IAccountManager accountManager, ILogger<CoreRepositoriesDbInitializer> logger)
+        public CoreRepositoriesDbInitializer(CoreRepositoriesDbContext context, IRepositoriesAccountManager accountManager, ILogger<CoreRepositoriesDbInitializer> logger)
         {
             _accountManager = accountManager;
             _context = context;

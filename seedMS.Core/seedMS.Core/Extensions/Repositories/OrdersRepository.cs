@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using seedMS.Core.DomainModels.Repositories;
 using seedMS.Core.Interfaces.Repositories;
-using seedMS.Core.Data;
+using seedMS.Core.Data.Repositories;
 
 namespace seedMS.Core.Extensions.Repositories
 {
@@ -27,9 +27,9 @@ namespace seedMS.Core.Extensions.Repositories
 
 
 
-        private ApplicationDbContext appContext
+        private CoreRepositoriesDbContext appContext
         {
-            get { return (ApplicationDbContext)_context; }
+            get { return (CoreRepositoriesDbContext)_context; }
         }
     }
 }

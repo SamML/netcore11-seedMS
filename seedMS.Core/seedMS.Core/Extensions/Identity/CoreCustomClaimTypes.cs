@@ -1,12 +1,4 @@
-﻿// ======================================
-// Author: Ebenezer Monney
-// Email:  info@ebenmonney.com
-// Copyright (c) 2017 www.ebenmonney.com
-// 
-// ==> Gun4Hire: contact@ebenmonney.com
-// ======================================
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace seedMS.Core.Extensions.Identity
 {
-    public static class CustomClaimTypes
+    public static class CoreCustomClaimTypes
     {
         ///<summary>A claim that specifies the permission of an entity</summary>
         public const string Permission = "permission";

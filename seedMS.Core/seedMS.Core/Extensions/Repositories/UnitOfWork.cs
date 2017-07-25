@@ -1,13 +1,5 @@
-﻿// ======================================
-// Author: Ebenezer Monney
-// Email:  info@ebenmonney.com
-// Copyright (c) 2017 www.ebenmonney.com
-// 
-// ==> Gun4Hire: contact@ebenmonney.com
-// ======================================
-
-using seedMS.Core.Interfaces.Repositories;
-using seedMS.Core.Data;
+﻿using seedMS.Core.Interfaces.Repositories;
+using seedMS.Core.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +10,7 @@ namespace seedMS.Core.Extensions.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        readonly ApplicationDbContext _context;
+        readonly CoreRepositoriesDbContext _context;
 
         ICustomerRepository _customers;
         IProductRepository _products;
@@ -26,7 +18,7 @@ namespace seedMS.Core.Extensions.Repositories
 
 
 
-        public UnitOfWork(ApplicationDbContext context)
+        public UnitOfWork(CoreRepositoriesDbContext context)
         {
             _context = context;
         }

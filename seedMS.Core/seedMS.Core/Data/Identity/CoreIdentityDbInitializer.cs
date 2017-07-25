@@ -31,7 +31,7 @@ namespace seedMS.Core.Data.Identity
                 const string adminRoleName = "administrator";
                 const string userRoleName = "user";
 
-                await ensureRoleAsync(adminRoleName, "Default administrator", ApplicationPermissions.GetAllPermissionValues());
+                await ensureRoleAsync(adminRoleName, "Default administrator", CoreApplicationPermissions.GetAllPermissionValues());
                 await ensureRoleAsync(userRoleName, "Default user", new string[] { });
 
                 await createUserAsync("admin", "admin@admin", "Inbuilt Administrator", "admin@admin.com", "+1 (123) 000-0000", new string[] { adminRoleName });

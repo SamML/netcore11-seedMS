@@ -1,4 +1,5 @@
 ﻿using seedMS.Core.Extensions.Identity;
+using seedMS.Core.Extensions.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

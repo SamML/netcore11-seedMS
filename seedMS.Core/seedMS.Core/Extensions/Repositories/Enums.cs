@@ -8,7 +8,7 @@
 
 using System;
 
-namespace seedMS.Core.Extensions.Identity
+namespace seedMS.Core.Extensions.Repositories
 {
     public enum Gender
     {
