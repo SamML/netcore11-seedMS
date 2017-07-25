@@ -3,8 +3,43 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "seedMS.Core", "seedMS.Core\seedMS.Core\seedMS.Core.csproj", "{6676FB96-5353-4000-8550-923B8263B248}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{8299FAF2-9B4F-4210-93C7-497D06541BB5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{46DE0909-66F3-42CC-9A0B-4629F54884B2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "seedMS.Web.AspNetCore", "seedMS.Web.AspNetCore\seedMS.Web.AspNetCore\seedMS.Web.AspNetCore.csproj", "{FE46334D-1744-4257-9186-BA581F38A3C3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{C31A608B-B3B1-4899-BD92-9F6F899522F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "seedMS.Misc", "seedMS.Misc\seedMS.Misc\seedMS.Misc.csproj", "{2DBE579C-5F79-42F9-A980-2379CDD05539}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6676FB96-5353-4000-8550-923B8263B248}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6676FB96-5353-4000-8550-923B8263B248}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6676FB96-5353-4000-8550-923B8263B248}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6676FB96-5353-4000-8550-923B8263B248}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE46334D-1744-4257-9186-BA581F38A3C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE46334D-1744-4257-9186-BA581F38A3C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE46334D-1744-4257-9186-BA581F38A3C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE46334D-1744-4257-9186-BA581F38A3C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DBE579C-5F79-42F9-A980-2379CDD05539}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DBE579C-5F79-42F9-A980-2379CDD05539}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DBE579C-5F79-42F9-A980-2379CDD05539}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DBE579C-5F79-42F9-A980-2379CDD05539}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6676FB96-5353-4000-8550-923B8263B248} = {8299FAF2-9B4F-4210-93C7-497D06541BB5}
+		{FE46334D-1744-4257-9186-BA581F38A3C3} = {46DE0909-66F3-42CC-9A0B-4629F54884B2}
+		{2DBE579C-5F79-42F9-A980-2379CDD05539} = {C31A608B-B3B1-4899-BD92-9F6F899522F2}
 	EndGlobalSection
 EndGlobal
