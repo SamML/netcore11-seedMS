@@ -7,4 +7,5 @@ CoreRepositoriesDbContext: Identity implementation. Administrator and User defau
 , Customer, Order). With relation User->Order and claim based authorization implemented.
 
 2 - MISC: Views and application helpers.
+
 3 - WEB: Presentation layer (Actual Asp .Net Core 1.1)
