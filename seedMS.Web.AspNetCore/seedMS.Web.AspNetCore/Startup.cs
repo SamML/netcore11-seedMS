@@ -57,7 +57,7 @@ namespace seedMS.Web.AspNetCore
                 .AddDefaultTokenProviders();
 
             services.AddDbContext<CoreRepositoriesDbContext>(options =>
-           options.UseSqlServer(Configuration.GetConnectionString("CoreIdentityDbContextConnection")));
+           options.UseSqlServer(Configuration.GetConnectionString("CoreRepositoriesDbContextConnection")));
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<CoreRepositoriesDbContext>()
@@ -131,6 +131,13 @@ namespace seedMS.Web.AspNetCore
             //ADD Account Manager Services
             services.AddScoped<ICoreAccountManager, CoreAccountManager>();
             services.AddScoped<IRepositoriesAccountManager, RepositoriesAccountManager>();
+
+            // Auth Policies
+            services.AddSingleton<IAuthorizationHandler, ViewUserByIdHandler>();
+            services.AddSingleton<IAuthorizationHandler, ManageUserByIdHandler>();
+            services.AddSingleton<IAuthorizationHandler, ViewRoleByNameHandler>();
+            services.AddSingleton<IAuthorizationHandler, AssignRolesHandler>();
+
             // DB Creation and Seeding
             services.AddTransient<IDatabaseInitializer, CoreIdentityDbInitializer>();
             services.AddTransient<IDatabaseInitializer, CoreRepositoriesDbInitializer>();

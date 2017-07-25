@@ -13,7 +13,7 @@ namespace seedMS.Core.Data.Repositories
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
-        public CoreRepositoriesDbContext(DbContextOptions options) : base(options)
+        public CoreRepositoriesDbContext(DbContextOptions<CoreRepositoriesDbContext> options) : base(options)
         { }
 
         protected override void OnModelCreating(ModelBuilder builder)
