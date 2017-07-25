@@ -1,11 +1,4 @@
-﻿//// ======================================
-//// Author: Ebenezer Monney
-//// Email:  info@ebenmonney.com
-//// Copyright (c) 2017 www.ebenmonney.com
-//// 
-//// ==> Gun4Hire: contact@ebenmonney.com
-//// ======================================
-
+﻿
 //using DAL.Models;
 //using FluentValidation;
 //using Quick_Application1.Helpers;
@@ -14,7 +7,6 @@
 //using System.Collections.Generic;
 //using System.ComponentModel.DataAnnotations;
 //using System.Linq;
-
 
 //namespace Quick_Application1.ViewModels
 //{
@@ -43,9 +35,6 @@
 //        [MinimumCount(1, ErrorMessage = "Roles cannot be empty")]
 //        public string[] Roles { get; set; }
 //    }
-
-
-
 
 //    //////Todo: ***Using DataAnnotations for validations until Swashbuckle supports FluentValidation***
 //    //public class UserViewModelValidator : AbstractValidator<UserViewModel>

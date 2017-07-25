@@ -1,10 +1,6 @@
-﻿using seedMS.Core.Extensions.Identity;
-using seedMS.Core.Extensions.Repositories;
+﻿using seedMS.Core.Extensions.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace seedMS.Core.DomainModels.Repositories
 {
@@ -19,7 +15,6 @@ namespace seedMS.Core.DomainModels.Repositories
         public Gender Gender { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
-
 
         public ICollection<Order> Orders { get; set; }
     }

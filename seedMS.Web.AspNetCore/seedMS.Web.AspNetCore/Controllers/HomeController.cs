@@ -1,9 +1,7 @@
-﻿
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using seedMS.Core.DomainModels.Repositories;
-using System.Threading.Tasks;
 
 namespace seedMS.Web.AspNetCore.Controllers
 {
@@ -16,12 +14,13 @@ namespace seedMS.Web.AspNetCore.Controllers
         {
             //this.userManager = userManager;
         }
+
         //[Authorize(Roles = "User")]
         public IActionResult Index()
         {
             //string userName =  userManager.GetUserName(User);
             //return View("Index",userName);
             return View("Index", "persona");
-        }       
+        }
     }
 }

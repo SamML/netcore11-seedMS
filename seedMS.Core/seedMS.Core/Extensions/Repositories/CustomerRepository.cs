@@ -1,21 +1,10 @@
-﻿// ======================================
-// Author: Ebenezer Monney
-// Email:  info@ebenmonney.com
-// Copyright (c) 2017 www.ebenmonney.com
-// 
-// ==> Gun4Hire: contact@ebenmonney.com
-// ======================================
-
+﻿using Microsoft.EntityFrameworkCore;
+using seedMS.Core.Data.Repositories;
+using seedMS.Core.DomainModels.Repositories;
+using seedMS.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-
-using seedMS.Core.DomainModels.Repositories;
-using seedMS.Core.Interfaces.Repositories;
-using seedMS.Core.Data.Repositories;
 
 namespace seedMS.Core.Extensions.Repositories
 {
@@ -24,12 +13,10 @@ namespace seedMS.Core.Extensions.Repositories
         public CustomerRepository(CoreRepositoriesDbContext context) : base(context)
         { }
 
-
         public IEnumerable<Customer> GetTopActiveCustomers(int count)
         {
             throw new NotImplementedException();
         }
-
 
         public IEnumerable<Customer> GetAllCustomersData()
         {
@@ -39,8 +26,6 @@ namespace seedMS.Core.Extensions.Repositories
                 .OrderBy(c => c.Name)
                 .ToList();
         }
-
-
 
         private CoreRepositoriesDbContext appContext
         {

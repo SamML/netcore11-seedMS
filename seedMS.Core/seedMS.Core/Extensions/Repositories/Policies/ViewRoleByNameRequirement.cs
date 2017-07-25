@@ -1,27 +1,11 @@
-﻿// ======================================
-// Author: Ebenezer Monney
-// Email:  info@ebenmonney.com
-// Copyright (c) 2017 www.ebenmonney.com
-// 
-// ==> Gun4Hire: contact@ebenmonney.com
-// ======================================
-
-
-using Microsoft.AspNetCore.Authorization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
+﻿using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 
 namespace seedMS.Core.Extensions.Repositories
 {
     public class ViewRoleByNameRequirement : IAuthorizationRequirement
     {
-
     }
-
 
     public class ViewRoleByNameHandler : AuthorizationHandler<ViewRoleByNameRequirement, string>
     {

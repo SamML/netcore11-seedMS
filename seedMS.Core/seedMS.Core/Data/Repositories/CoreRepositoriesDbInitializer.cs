@@ -1,12 +1,4 @@
-﻿// ======================================
-// Author: Ebenezer Monney
-// Email:  info@ebenmonney.com
-// Copyright (c) 2017 www.ebenmonney.com
-//
-// ==> Gun4Hire: contact@ebenmonney.com
-// ======================================
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using seedMS.Core.DomainModels.Repositories;
 using seedMS.Core.Extensions.Repositories;

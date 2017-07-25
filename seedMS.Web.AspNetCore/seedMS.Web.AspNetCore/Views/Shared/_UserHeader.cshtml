@@ -1,8 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using seedMS.Core.DomainModels.Identity
 
-
-
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -21,7 +19,7 @@
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">      
+    <ul class="nav navbar-nav navbar-right">
         <li><a asp-area="Core" asp-controller="Account" asp-action="Login">Log in</a></li>
     </ul>
 }

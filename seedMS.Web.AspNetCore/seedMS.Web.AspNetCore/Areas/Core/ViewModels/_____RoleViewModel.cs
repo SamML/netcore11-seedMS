@@ -2,17 +2,12 @@
 // Author: Ebenezer Monney
 // Email:  info@ebenmonney.com
 // Copyright (c) 2017 www.ebenmonney.com
-// 
+//
 // ==> Gun4Hire: contact@ebenmonney.com
 // ======================================
 
 //using Quick_Application1.Helpers;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace seedMS.Web.AspNetCore.Areas.Core.ViewModels
 {

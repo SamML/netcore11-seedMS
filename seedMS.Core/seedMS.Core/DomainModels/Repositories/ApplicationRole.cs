@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using seedMS.Core.DomainModels.Identity;
 using System;
 
 namespace seedMS.Core.DomainModels.Repositories
 {
-    public class ApplicationRole : IdentityRole 
+    public class ApplicationRole : IdentityRole
     {
         public string Description { get; set; }
 
@@ -20,7 +19,7 @@ namespace seedMS.Core.DomainModels.Repositories
         public ApplicationRole()
         {
         }
-        
+
         /// <summary>
         /// Initializes a new instance of <see cref="ApplicationRole"/>.
         /// </summary>

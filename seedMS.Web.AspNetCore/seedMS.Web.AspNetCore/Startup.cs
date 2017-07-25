@@ -1,43 +1,33 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
-
-using seedMS.Web.AspNetCore.Services;
+using seedMS.Core.Data;
+using seedMS.Core.Data.Identity;
 using seedMS.Core.Data.Repositories;
 using seedMS.Core.DomainModels.Identity;
-using seedMS.Core;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using seedMS.Misc.Utils;
-using seedMS.Core.Interfaces.Identity;
-using seedMS.Core.Extensions.Identity;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
-using AppPermissions = seedMS.Core.Extensions.Repositories.ApplicationPermissions;
-using seedMS.Core.Data.Identity;
 using seedMS.Core.DomainModels.Repositories;
-using seedMS.Core.Interfaces.Repositories;
-using seedMS.Core.Data;
+using seedMS.Core.Extensions.Identity;
 using seedMS.Core.Extensions.Repositories;
+using seedMS.Core.Interfaces.Identity;
+using seedMS.Core.Interfaces.Repositories;
+using seedMS.Misc.Utils;
+using seedMS.Web.AspNetCore.Services;
+using System;
+using AppPermissions = seedMS.Core.Extensions.Repositories.ApplicationPermissions;
 
 namespace seedMS.Web.AspNetCore
 {
     public class Startup
     {
-        
-
         public Startup(IHostingEnvironment env)
         {
-            
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -51,7 +41,6 @@ namespace seedMS.Web.AspNetCore
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
-           
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -59,7 +48,6 @@ namespace seedMS.Web.AspNetCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
             // ADD DB CONTEXTS
             services.AddDbContext<CoreIdentityDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("CoreIdentityDbContextConnection")));
@@ -81,11 +69,11 @@ namespace seedMS.Web.AspNetCore
                 options.User.RequireUniqueEmail = true;
 
                 //    //// Password settings
-               options.Password.RequireDigit = false;
-               options.Password.RequiredLength = 8;
-               options.Password.RequireNonAlphanumeric = false;
-               options.Password.RequireUppercase = false;
-               options.Password.RequireLowercase = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
 
                 //    //// Lockout settings
                 //    //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
@@ -95,7 +83,6 @@ namespace seedMS.Web.AspNetCore
                 //options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
                 //options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
             });
-
 
             //ADD MVC
             services.AddMvc();
@@ -108,7 +95,6 @@ namespace seedMS.Web.AspNetCore
             {
                 //Set default authorization
                 options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireRole("administrator").Build();
-                
 
                 options.AddPolicy(AuthPolicies.ViewUserByUserIdPolicy, policy => policy.Requirements.Add(new ViewUserByIdRequirement()));
 

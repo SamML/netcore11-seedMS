@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using seedMS.Core.DomainModels.Repositories;
@@ -37,6 +35,7 @@ namespace seedMS.Web.AspNetCore.Areas.Core.Controllers
             }).ToList();
             return View(model);
         }
+
         [HttpGet]
         [Route("[action]/{id?}")]
         public async Task<IActionResult> AddEditApplicationRole(string id)
@@ -54,6 +53,7 @@ namespace seedMS.Web.AspNetCore.Areas.Core.Controllers
             }
             return PartialView("_AddEditApplicationRole", model);
         }
+
         [HttpPost]
         [Route("[action]/{id?}")]
         public async Task<IActionResult> AddEditApplicationRole(string id, ApplicationRoleViewModel model)
@@ -63,13 +63,13 @@ namespace seedMS.Web.AspNetCore.Areas.Core.Controllers
                 bool isExist = !String.IsNullOrEmpty(id);
                 ApplicationRole applicationRole = isExist ? await roleManager.FindByIdAsync(id) :
                new ApplicationRole
-               {                   
-                   CreatedDate = DateTime.UtcNow                   
+               {
+                   CreatedDate = DateTime.UtcNow
                };
                 applicationRole.Name = model.RoleName;
                 applicationRole.Description = model.Description;
                 applicationRole.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-                IdentityResult roleRuslt = isExist?  await roleManager.UpdateAsync(applicationRole)
+                IdentityResult roleRuslt = isExist ? await roleManager.UpdateAsync(applicationRole)
                                                     : await roleManager.CreateAsync(applicationRole);
                 if (roleRuslt.Succeeded)
                 {
@@ -99,7 +99,7 @@ namespace seedMS.Web.AspNetCore.Areas.Core.Controllers
         [Route("[action]/{id?}")]
         public async Task<IActionResult> DeleteApplicationRole(string id, FormCollection form)
         {
-            if(!String.IsNullOrEmpty(id))
+            if (!String.IsNullOrEmpty(id))
             {
                 ApplicationRole applicationRole = await roleManager.FindByIdAsync(id);
                 if (applicationRole != null)
@@ -110,7 +110,7 @@ namespace seedMS.Web.AspNetCore.Areas.Core.Controllers
                         return RedirectToAction("Index");
                     }
                 }
-                }
+            }
             return View();
         }
     }

@@ -1,24 +1,19 @@
 ﻿using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+
 //using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace seedMS.Misc.Utils
 {
     public static class Utils
     {
-        static ILoggerFactory _loggerFactory;
-
+        private static ILoggerFactory _loggerFactory;
 
         public static void ConfigureLogger(ILoggerFactory loggerFactory)
         {
             _loggerFactory = loggerFactory;
         }
-
 
         public static ILogger CreateLogger<T>()
         {
@@ -30,7 +25,6 @@ namespace seedMS.Misc.Utils
 
             return _loggerFactory.CreateLogger<T>();
         }
-
 
         public static void QuickLog(string text, string filename)
         {
@@ -45,14 +39,10 @@ namespace seedMS.Misc.Utils
             }
         }
 
-
-
         //public static string GetUserId(ClaimsPrincipal user)
         //{
         //    return user.FindFirst(OpenIdConnectConstants.Claims.Subject)?.Value?.Trim();
         //}
-
-
 
         //public static string[] GetRoles(ClaimsPrincipal identity)
         //{

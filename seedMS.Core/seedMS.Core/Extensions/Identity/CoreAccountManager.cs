@@ -1,26 +1,21 @@
-﻿
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using seedMS.Core.DomainModels.Identity;
 using seedMS.Core.Data.Identity;
+using seedMS.Core.DomainModels.Identity;
 using seedMS.Core.Interfaces.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
-
 
 namespace seedMS.Core.Extensions.Identity
 {
-    
     public class CoreAccountManager : ICoreAccountManager
     {
         private readonly CoreIdentityDbContext _context;
         private readonly UserManager<CoreIdentityUser> _userManager;
         private readonly RoleManager<CoreIdentityRole> _roleManager;
-
 
         public CoreAccountManager(CoreIdentityDbContext context, UserManager<CoreIdentityUser> userManager, RoleManager<CoreIdentityRole> roleManager)
         {
@@ -28,9 +23,6 @@ namespace seedMS.Core.Extensions.Identity
             _userManager = userManager;
             _roleManager = roleManager;
         }
-
-
-
 
         public async Task<CoreIdentityUser> GetUserByIdAsync(string userId)
         {
@@ -52,7 +44,6 @@ namespace seedMS.Core.Extensions.Identity
             return await _userManager.GetRolesAsync(user);
         }
 
-
         public async Task<Tuple<CoreIdentityUser, string[]>> GetUserAndRolesAsync(string userId)
         {
             var user = await _context.Users
@@ -72,7 +63,6 @@ namespace seedMS.Core.Extensions.Identity
 
             return Tuple.Create(user, roles);
         }
-
 
         public async Task<List<Tuple<CoreIdentityUser, string[]>>> GetUsersAndRolesAsync(int page, int pageSize)
         {
@@ -99,13 +89,11 @@ namespace seedMS.Core.Extensions.Identity
                 .ToList();
         }
 
-
         public async Task<Tuple<bool, string[]>> CreateUserAsync(CoreIdentityUser user, IEnumerable<string> roles, string password)
         {
             var result = await _userManager.CreateAsync(user, password);
             if (!result.Succeeded)
                 return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
-
 
             user = await _userManager.FindByNameAsync(user.UserName);
 
@@ -128,19 +116,16 @@ namespace seedMS.Core.Extensions.Identity
             return Tuple.Create(true, new string[] { });
         }
 
-
         public async Task<Tuple<bool, string[]>> UpdateUserAsync(CoreIdentityUser user)
         {
             return await UpdateUserAsync(user, null);
         }
-
 
         public async Task<Tuple<bool, string[]>> UpdateUserAsync(CoreIdentityUser user, IEnumerable<string> roles)
         {
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
                 return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
-
 
             if (roles != null)
             {
@@ -166,7 +151,6 @@ namespace seedMS.Core.Extensions.Identity
 
             return Tuple.Create(true, new string[] { });
         }
-
 
         public async Task<Tuple<bool, string[]>> ResetPasswordAsync(CoreIdentityUser user, string newPassword)
         {
@@ -201,10 +185,6 @@ namespace seedMS.Core.Extensions.Identity
             return true;
         }
 
-
-
-
-
         public async Task<Tuple<bool, string[]>> DeleteUserAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -215,29 +195,21 @@ namespace seedMS.Core.Extensions.Identity
             return Tuple.Create(true, new string[] { });
         }
 
-
         public async Task<Tuple<bool, string[]>> DeleteUserAsync(CoreIdentityUser user)
         {
             var result = await _userManager.DeleteAsync(user);
             return Tuple.Create(result.Succeeded, result.Errors.Select(e => e.Description).ToArray());
         }
 
-
-
-
-
-
         public async Task<CoreIdentityRole> GetRoleByIdAsync(string roleId)
         {
             return await _roleManager.FindByIdAsync(roleId);
         }
 
-
         public async Task<CoreIdentityRole> GetRoleByNameAsync(string roleName)
         {
             return await _roleManager.FindByNameAsync(roleName);
         }
-
 
         public async Task<CoreIdentityRole> GetRoleLoadRelatedAsync(string roleName)
         {
@@ -249,7 +221,6 @@ namespace seedMS.Core.Extensions.Identity
 
             return role;
         }
-
 
         public async Task<List<CoreIdentityRole>> GetRolesLoadRelatedAsync(int page, int pageSize)
         {
@@ -269,7 +240,6 @@ namespace seedMS.Core.Extensions.Identity
             return roles;
         }
 
-
         public async Task<Tuple<bool, string[]>> CreateRoleAsync(CoreIdentityRole role, IEnumerable<string> claims)
         {
             if (claims == null)
@@ -279,11 +249,9 @@ namespace seedMS.Core.Extensions.Identity
             if (invalidClaims.Any())
                 return Tuple.Create(false, new string[] { "The following claim types are invalid: " + string.Join(", ", invalidClaims) });
 
-
             var result = await _roleManager.CreateAsync(role);
             if (!result.Succeeded)
                 return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
-
 
             role = await _roleManager.FindByNameAsync(role.Name);
 
@@ -310,11 +278,9 @@ namespace seedMS.Core.Extensions.Identity
                     return Tuple.Create(false, new string[] { "The following claim types are invalid: " + string.Join(", ", invalidClaims) });
             }
 
-
             var result = await _roleManager.UpdateAsync(role);
             if (!result.Succeeded)
                 return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
-
 
             if (claims != null)
             {
@@ -348,7 +314,6 @@ namespace seedMS.Core.Extensions.Identity
             return Tuple.Create(true, new string[] { });
         }
 
-
         public async Task<Tuple<bool, string[]>> DeleteRoleAsync(string roleName)
         {
             var role = await _roleManager.FindByNameAsync(roleName);
@@ -358,7 +323,6 @@ namespace seedMS.Core.Extensions.Identity
 
             return Tuple.Create(true, new string[] { });
         }
-
 
         public async Task<Tuple<bool, string[]>> DeleteRoleAsync(CoreIdentityRole role)
         {

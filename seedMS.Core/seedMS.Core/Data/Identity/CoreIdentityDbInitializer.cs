@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using seedMS.Core.DomainModels.Identity;
-
 using seedMS.Core.Extensions.Identity;
 using seedMS.Core.Interfaces.Identity;
 using System;
@@ -54,7 +53,7 @@ namespace seedMS.Core.Data.Identity
 
         private async Task<CoreIdentityUser> createUserAsync(string userName, string password, string fullName, string email, string phoneNumber, string[] roles)
         {
-             CoreIdentityUser applicationUser = new CoreIdentityUser
+            CoreIdentityUser applicationUser = new CoreIdentityUser
             {
                 UserName = userName,
                 FullName = fullName,

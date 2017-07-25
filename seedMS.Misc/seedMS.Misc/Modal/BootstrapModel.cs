@@ -1,6 +1,4 @@
-﻿
-
-namespace seedMS.Misc.Modal
+﻿namespace seedMS.Misc.Modal
 {
     public class BootstrapModel
     {
@@ -8,6 +6,7 @@ namespace seedMS.Misc.Modal
         public string AreaLabeledId { get; set; }
         public ModalSize Size { get; set; }
         public string Message { get; set; }
+
         public string ModalSizeClass
         {
             get
@@ -16,13 +15,15 @@ namespace seedMS.Misc.Modal
                 {
                     case ModalSize.Small:
                         return "modal-sm";
+
                     case ModalSize.Large:
                         return "modal-lg";
+
                     case ModalSize.Medium:
                     default:
                         return "";
                 }
             }
-        }        
+        }
     }
 }

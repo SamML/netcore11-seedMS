@@ -1,29 +1,20 @@
-﻿using seedMS.Core.Interfaces.Repositories;
-using seedMS.Core.Data.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using seedMS.Core.Data.Repositories;
+using seedMS.Core.Interfaces.Repositories;
 
 namespace seedMS.Core.Extensions.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        readonly CoreRepositoriesDbContext _context;
+        private readonly CoreRepositoriesDbContext _context;
 
-        ICustomerRepository _customers;
-        IProductRepository _products;
-        IOrdersRepository _orders;
-
-
+        private ICustomerRepository _customers;
+        private IProductRepository _products;
+        private IOrdersRepository _orders;
 
         public UnitOfWork(CoreRepositoriesDbContext context)
         {
             _context = context;
         }
-
-
 
         public ICustomerRepository Customers
         {
@@ -36,8 +27,6 @@ namespace seedMS.Core.Extensions.Repositories
             }
         }
 
-
-
         public IProductRepository Products
         {
             get
@@ -49,8 +38,6 @@ namespace seedMS.Core.Extensions.Repositories
             }
         }
 
-
-
         public IOrdersRepository Orders
         {
             get
@@ -61,9 +48,6 @@ namespace seedMS.Core.Extensions.Repositories
                 return _orders;
             }
         }
-
-
-
 
         public int SaveChanges()
         {

@@ -3,10 +3,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace seedMS.Core.Extensions.Identity
 {
@@ -39,7 +36,7 @@ namespace seedMS.Core.Extensions.Identity
 
         public void OnProvidersExecuting(ApplicationModelProviderContext context)
         {
-            //empty    
+            //empty
         }
     }
 }

@@ -1,12 +1,10 @@
-﻿
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using seedMS.Core.DomainModels.Repositories;
 using seedMS.Web.AspNetCore.Areas.Core.ViewModels;
 using seedMS.Web.AspNetCore.Controllers;
 using System.Threading.Tasks;
-
 
 namespace seedMS.Web.AspNetCore.Areas.Core.Controllers
 {
@@ -27,14 +25,11 @@ namespace seedMS.Web.AspNetCore.Areas.Core.Controllers
         [Route("")]
         public override IActionResult Index()
         {
-           
             return View();
         }
 
-
         [HttpGet]
         [AllowAnonymous]
-        
         [Route("[action]")]
         public IActionResult Login(string returnUrl = null)
         {
@@ -54,15 +49,15 @@ namespace seedMS.Web.AspNetCore.Areas.Core.Controllers
                 var user = await userManager.FindByEmailAsync(model.Email);
                 var result = await signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
-                {                   
+                {
                     return RedirectToLocal(returnUrl);
-                }               
+                }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return View(model);
                 }
-            }           
+            }
             return View(model);
         }
 
@@ -71,7 +66,7 @@ namespace seedMS.Web.AspNetCore.Areas.Core.Controllers
         [Route("[action]/{id?}")]
         public async Task<IActionResult> SignOff()
         {
-            await signInManager.SignOutAsync();           
+            await signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
 

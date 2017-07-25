@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -170,7 +169,7 @@ namespace seedMS.Web.AspNetCore.Areas.Core.Controllers
                 ApplicationUser applicationUser = await userManager.FindByIdAsync(id);
                 if (applicationUser != null)
                 {
-                    IdentityResult result = await userManager.DeleteAsync(applicationUser); 
+                    IdentityResult result = await userManager.DeleteAsync(applicationUser);
                     if (result.Succeeded)
                     {
                         return RedirectToAction("Index");

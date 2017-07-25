@@ -1,15 +1,4 @@
-﻿// ======================================
-// Author: Ebenezer Monney
-// Email:  info@ebenmonney.com
-// Copyright (c) 2017 www.ebenmonney.com
-// 
-// ==> Gun4Hire: contact@ebenmonney.com
-// ======================================
-
-using System;
-using System.Linq;
-
-namespace seedMS.Core.DomainModels.Repositories
+﻿namespace seedMS.Core.DomainModels.Repositories
 {
     public class OrderDetail
     {
@@ -17,7 +6,6 @@ namespace seedMS.Core.DomainModels.Repositories
         public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
         public decimal Discount { get; set; }
-
 
         public int ProductId { get; set; }
         public Product Product { get; set; }

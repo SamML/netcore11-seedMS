@@ -1,24 +1,12 @@
-﻿// ======================================
-// Author: Ebenezer Monney
-// Email:  info@ebenmonney.com
-// Copyright (c) 2017 www.ebenmonney.com
-// 
-// ==> Gun4Hire: contact@ebenmonney.com
-// ======================================
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace seedMS.Core.Extensions.Identity
 {
     public static class CoreApplicationPermissions
     {
         public static ReadOnlyCollection<CoreApplicationPermission> AllPermissions;
-
 
         public const string UsersPermissionGroupName = "User Permissions";
         public static CoreApplicationPermission ViewUsers = new CoreApplicationPermission("View Users", "users.view", UsersPermissionGroupName, "Permission to view other users account details");
@@ -28,9 +16,6 @@ namespace seedMS.Core.Extensions.Identity
         public static CoreApplicationPermission ViewRoles = new CoreApplicationPermission("View Roles", "roles.view", RolesPermissionGroupName, "Permission to view available roles");
         public static CoreApplicationPermission ManageRoles = new CoreApplicationPermission("Manage Roles", "roles.manage", RolesPermissionGroupName, "Permission to create, delete and modify roles");
         public static CoreApplicationPermission AssignRoles = new CoreApplicationPermission("Assign Roles", "roles.assign", RolesPermissionGroupName, "Permission to assign roles to users");
-
-
-
 
         static CoreApplicationPermissions()
         {
@@ -68,10 +53,6 @@ namespace seedMS.Core.Extensions.Identity
         }
     }
 
-
-
-
-
     public class CoreApplicationPermission
     {
         public CoreApplicationPermission()
@@ -85,19 +66,15 @@ namespace seedMS.Core.Extensions.Identity
             Description = description;
         }
 
-
-
         public string Name { get; set; }
         public string Value { get; set; }
         public string GroupName { get; set; }
         public string Description { get; set; }
 
-
         public override string ToString()
         {
             return Value;
         }
-
 
         public static implicit operator string(CoreApplicationPermission permission)
         {
