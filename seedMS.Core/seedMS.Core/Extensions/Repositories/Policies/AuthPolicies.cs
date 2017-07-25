@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace seedMS.Core.Extensions.Identity
+namespace seedMS.Core.Extensions.Repositories
 {
     public class AuthPolicies
     {

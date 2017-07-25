@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using seedMS.Core.DomainModels.Identity;
+using seedMS.Core.DomainModels.Repositories;
 using seedMS.Web.AspNetCore.Areas.Core.ViewModels;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,5 @@
-﻿// ======================================
+﻿using seedMS.Core.Data.Repositories;
+// ======================================
 // Author: Ebenezer Monney
 // Email:  info@ebenmonney.com
 // Copyright (c) 2017 www.ebenmonney.com
@@ -27,9 +28,9 @@ namespace seedMS.Core.Extensions.Repositories
 
 
 
-        private ApplicationDbContext appContext
+        private CoreRepositoriesDbContext appContext
         {
-            get { return (ApplicationDbContext)_context; }
+            get { return (CoreRepositoriesDbContext)_context; }
         }
     }
 }

@@ -5,7 +5,7 @@ using seedMS.Core.DomainModels.Repositories;
 
 namespace seedMS.Core.Data.Repositories
 {
-    public class CoreRepositoriesDbContext : IdentityDbContext
+    public class CoreRepositoriesDbContext : IdentityDbContext <ApplicationUser, ApplicationRole, string>
     {
         public DbSet<Customer> Customers { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }

@@ -1,12 +1,4 @@
-﻿// ======================================
-// Author: Ebenezer Monney
-// Email:  info@ebenmonney.com
-// Copyright (c) 2017 www.ebenmonney.com
-// 
-// ==> Gun4Hire: contact@ebenmonney.com
-// ======================================
-
-
+﻿
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using seedMS.Core.DomainModels.Repositories;
@@ -21,8 +13,8 @@ using System.Threading.Tasks;
 
 
 namespace seedMS.Core.Extensions.Repositories
-{ 
-    
+{
+
     public class RepositoriesAccountManager : IRepositoriesAccountManager
     {
         private readonly CoreRepositoriesDbContext _context;
@@ -372,6 +364,23 @@ namespace seedMS.Core.Extensions.Repositories
         {
             var result = await _roleManager.DeleteAsync(role);
             return Tuple.Create(result.Succeeded, result.Errors.Select(e => e.Description).ToArray());
+        }
+
+        public async Task<bool> TestCanDeleteUserAsync(string userId)
+        {
+            if (await _context.Orders.Where(o => o.CashierId == userId).AnyAsync())
+                return false;
+
+            //canDelete = !await ; //Do other tests...
+
+            return true;
+        }
+
+
+
+        public async Task<bool> TestCanDeleteRoleAsync(string roleId)
+        {
+            return !await _context.UserRoles.Where(r => r.RoleId == roleId).AnyAsync();
         }
     }
 }

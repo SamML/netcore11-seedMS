@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using seedMS.Core.DomainModels.Identity;
 using System;
 
 namespace seedMS.Core.DomainModels.Repositories
 {
-    public class ApplicationRole : IdentityRole
+    public class ApplicationRole : IdentityRole 
     {
         public string Description { get; set; }
 

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using seedMS.Core.DomainModels.Identity;
+using seedMS.Core.DomainModels.Repositories;
 using System.Threading.Tasks;
 
 namespace seedMS.Web.AspNetCore.Controllers

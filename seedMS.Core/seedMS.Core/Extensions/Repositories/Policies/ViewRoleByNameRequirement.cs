@@ -15,7 +15,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace seedMS.Core.Extensions.Identity
+namespace seedMS.Core.Extensions.Repositories
 {
     public class ViewRoleByNameRequirement : IAuthorizationRequirement
     {
