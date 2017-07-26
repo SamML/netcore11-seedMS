@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace seedMS.Web.AspNetCore.Areas.Core
 {
-    [Authorize]
+    //[Authorize]
     [Area("Core")]
     [Route("core")]
     public class CoreController : Controller

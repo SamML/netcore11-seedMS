@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -11,9 +12,14 @@ namespace seedMS.Core.Extensions.Identity
     {
         private readonly AuthorizationOptions _authorizationOptions;
 
+        
+       
+
         public OverridableDefaultAuthorizationApplicationModelProvider(IOptions<AuthorizationOptions> authorizationOptionsAccessor)
         {
             _authorizationOptions = authorizationOptionsAccessor.Value;
+            
+            
         }
 
         public int Order
@@ -30,12 +36,14 @@ namespace seedMS.Core.Extensions.Identity
                 {
                     //default policy only used when there is no authorize filter in the controller
                     controllerModel.Filters.Add(new AuthorizeFilter(_authorizationOptions.DefaultPolicy));
+                    
                 }
             }
         }
 
         public void OnProvidersExecuting(ApplicationModelProviderContext context)
         {
+            
             //empty
         }
     }

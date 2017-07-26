@@ -40,7 +40,7 @@ namespace seedMS.Web.AspNetCore.Areas.Core.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        [Route("[action]/{id?}")]
+        [Route("[action]")]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;

@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Reflection.Metadata;
+using Microsoft.AspNetCore.Mvc.Internal;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
@@ -20,7 +24,9 @@ using seedMS.Core.Interfaces.Repositories;
 using seedMS.Misc.Utils;
 using seedMS.Web.AspNetCore.Services;
 using System;
+using System.Threading.Tasks;
 using AppPermissions = seedMS.Core.Extensions.Repositories.ApplicationPermissions;
+using Microsoft.AspNetCore.Http;
 
 namespace seedMS.Web.AspNetCore
 {
@@ -52,19 +58,39 @@ namespace seedMS.Web.AspNetCore
             services.AddDbContext<CoreIdentityDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("CoreIdentityDbContextConnection")));
 
-            services.AddIdentity<CoreIdentityUser, CoreIdentityRole>()
+            services.AddIdentity<CoreIdentityUser, CoreIdentityRole>(options =>
+            {
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+
+                //    //// Password settings
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+
+                // Cookies
+                
+                options.Cookies.ApplicationCookie.CookieName = "##4j0ksñasj~@";
+                options.Cookies.ApplicationCookie.ExpireTimeSpan = TimeSpan.FromDays(1);
+                options.Cookies.ApplicationCookie.LoginPath = "/Core/Account/Login";
+                options.Cookies.ApplicationCookie.LogoutPath = "/Account/SignOff";
+                options.Cookies.ApplicationCookie.AccessDeniedPath = "/Core/Account/AccessDenied";
+                options.Cookies.ApplicationCookie.AutomaticAuthenticate = true;
+                options.Cookies.ApplicationCookie.AuthenticationScheme = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme;
+                options.Cookies.ApplicationCookie.ReturnUrlParameter = Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.ReturnUrlParameter;
+
+            })
                 .AddEntityFrameworkStores<CoreIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddDbContext<CoreRepositoriesDbContext>(options =>
            options.UseSqlServer(Configuration.GetConnectionString("CoreRepositoriesDbContextConnection")));
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
-                .AddEntityFrameworkStores<CoreRepositoriesDbContext>()
-                .AddDefaultTokenProviders();
-
-            services.Configure<IdentityOptions>(options =>
-            {
+            services.AddIdentity<ApplicationUser, ApplicationRole>(options => {
+                
                 // User settings
                 options.User.RequireUniqueEmail = true;
 
@@ -82,7 +108,33 @@ namespace seedMS.Web.AspNetCore
                 //options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
                 //options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
                 //options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
-            });
+            })
+                .AddEntityFrameworkStores<CoreRepositoriesDbContext>()
+                .AddDefaultTokenProviders();
+
+            //services.Configure<IdentityOptions>(options =>
+            //{
+               
+        
+
+            //    // User settings
+            //    options.User.RequireUniqueEmail = true;
+
+            //    //    //// Password settings
+            //    options.Password.RequireDigit = false;
+            //    options.Password.RequiredLength = 8;
+            //    options.Password.RequireNonAlphanumeric = false;
+            //    options.Password.RequireUppercase = false;
+            //    options.Password.RequireLowercase = false;
+
+            //    //    //// Lockout settings
+            //    //    //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+            //    //    //options.Lockout.MaxFailedAccessAttempts = 10;
+
+            //    //options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
+            //    //options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
+            //    //options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
+            //});
 
             //ADD MVC
             services.AddMvc();
@@ -91,11 +143,14 @@ namespace seedMS.Web.AspNetCore
             services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
 
             //ADD AUTHORIZATION OPTIONS
+          
+            
             services.AddAuthorization(options =>
             {
+                
                 //Set default authorization
                 options.DefaultPolicy = new AuthorizationPolicyBuilder().RequireRole("administrator").Build();
-
+                
                 options.AddPolicy(AuthPolicies.ViewUserByUserIdPolicy, policy => policy.Requirements.Add(new ViewUserByIdRequirement()));
 
                 options.AddPolicy(AuthPolicies.ViewUsersPolicy, policy => policy.RequireClaim(CustomClaimTypes.Permission, AppPermissions.ViewUsers));
@@ -121,8 +176,10 @@ namespace seedMS.Web.AspNetCore
                 //options.AddPolicy("DeleteUser", policy => policy.RequireClaim("Delete User", "Delete User"));
             });
 
-            //set to apply default authorization for empty controllers and [Authorize] declarations
+            //set to apply default authorization for empty controllers and [Authorize] declarations (Default Auth declared above)
             services.TryAddEnumerable(ServiceDescriptor.Transient<IApplicationModelProvider, OverridableDefaultAuthorizationApplicationModelProvider>());
+
+            services.AddAuthentication();
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -132,7 +189,7 @@ namespace seedMS.Web.AspNetCore
             services.AddScoped<ICoreAccountManager, CoreAccountManager>();
             services.AddScoped<IRepositoriesAccountManager, RepositoriesAccountManager>();
 
-            // Auth Policies
+            // Auth Policies (Repositories Context)
             services.AddSingleton<IAuthorizationHandler, ViewUserByIdHandler>();
             services.AddSingleton<IAuthorizationHandler, ManageUserByIdHandler>();
             services.AddSingleton<IAuthorizationHandler, ViewRoleByNameHandler>();
@@ -165,7 +222,7 @@ namespace seedMS.Web.AspNetCore
 
             app.UseStaticFiles();
 
-            app.UseIdentity();
+            app.UseIdentity().UseCookieAuthentication() ;
 
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 

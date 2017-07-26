@@ -8,18 +8,17 @@ namespace seedMS.Web.AspNetCore.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        //private readonly UserManager<ApplicationUser> userManager;
+    
 
-        public HomeController(UserManager<ApplicationUser> userManager)
+        public HomeController()
         {
-            //this.userManager = userManager;
+           
         }
 
         //[Authorize(Roles = "User")]
         public IActionResult Index()
         {
-            //string userName =  userManager.GetUserName(User);
-            //return View("Index",userName);
+            
             return View("Index", "persona");
         }
     }
